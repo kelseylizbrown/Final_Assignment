@@ -1,6 +1,12 @@
-<h1>Login</h1>
-
+<h1>Log In</h1>
 <form action="/sessions" method="post">
+  <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
 
-  <button>Login<button>
+  <label for="email">Email</label>
+  <input type="email" name="email" id="email">
+
+  <label for="password">Password</label>
+  <input type="password" name="password" id="password">
+
+  <button>Log In</button>
 </form>
