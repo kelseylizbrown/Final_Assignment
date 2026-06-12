@@ -3,18 +3,21 @@
 <h2>My Entries</h2>
 <% @current_user = User.find_by({ "id" => session["user_id"] }) %>
 <% if @current_user != nil %>
-  <% @entries = Entry.where({ "place_id" => @place["id"], "user_id" => @current_user["id"] }) %>
-  <% for entry in @entries %>
-    <h3><%= entry["title"] %></h3>
-    <h4><%= entry["occurred_on"] %></h4>
-    <p><%= entry["description"] %></p>
-  <% end %>
+  <div class="row">
+    <% @entries = Entry.where({ "place_id" => @place["id"], "user_id" => @current_user["id"] }) %>
+    <% for entry in @entries %>
+      <div class="col-12 col-md-4">
+        <h3><%= entry["title"] %></h3>
+        <h4><%= entry["occurred_on"] %></h4>
+        <p><%= entry["description"] %></p>
+        <% if entry.uploaded_image.attached? %>
+          <img src="<%= url_for(entry.uploaded_image) %>" class="img-fluid">
+        <% end %>
+      </div>
+    <% end %>
+  </div>
 
-  <p>
-    <a href="/entries/new?place_id=<%= @place["id"] %>">New Entry</a>
-  </p>
+  <a href="/entries/new?place_id=<%= @place["id"] %>" class="btn btn-primary">New Entry</a>
 <% end %>
 
-<p>
-  <a href="/places">Back to All Places</a>
-</p>
+<a href="/places" class="btn btn-secondary mt-2">Back to All Places</a>
